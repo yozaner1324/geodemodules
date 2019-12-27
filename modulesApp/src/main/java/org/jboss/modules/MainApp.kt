@@ -1,6 +1,5 @@
 package org.jboss.modules
 
-import org.apache.geode.service.SampleService
 import java.io.File
 import java.nio.file.Paths
 import java.util.*
@@ -8,8 +7,8 @@ import java.util.jar.JarFile
 
 class MainApp {
     private fun loadImplementationFromServiceLoader() {
-        val load = ServiceLoader.load(SampleService::class.java)
-        load.forEach { sampleService: SampleService -> println(sampleService.value) }
+//        val load = ServiceLoader.load(SampleService::class.java)
+//        load.forEach { sampleService: SampleService -> println(sampleService.value) }
     }
 
     private fun loadModuleFromClasspath() {
@@ -22,7 +21,7 @@ class MainApp {
 
         val jarFile = JarFile(File(jarPath), true)
         // xsd:all
-        val jarResourceLoader = ResourceLoaders.createJarResourceLoader(jarFile)
+        val jarResourceLoader = ResourceLoaders.createJarResourceLoader(moduleName, jarFile)
         val resourceLoaderSpec = ResourceLoaderSpec.createResourceLoaderSpec(jarResourceLoader)
 
         val builder: ModuleSpec.Builder = ModuleSpec.build(ModuleIdentifier.fromString(moduleName))
@@ -71,12 +70,15 @@ class MainApp {
                 val mainModule_Class = coreModule.classLoader.loadClass("org.apache.geode.service.impl.SampleServiceImpl");
             } catch (e: Exception) {
             }
-            val mainModuleInterface_Class = coreModule.classLoader.loadClass("org.apache.geode.service.SampleService");
-            val subModule_Class = subModule.classLoader.loadClass("org.apache.geode.service.impl.SampleServiceImpl");
-            coreModule.classLoader.getResource(SampleService::class.java.name);
+            try {
+                val subModule_Class = subModule.classLoaderPrivate.loadClass("org.apache.geode.service.impl.SampleServiceImpl");
+                val mainModuleInterface_Class = subModule.classLoaderPrivate.loadClass("org.apache.geode.service.SampleService");
+            } catch (e: Exception) {
+            }
+            coreModule.classLoader.getResource("org.apache.geode.service.SampleService");
 //            val serviceLoader = ServiceLoader.load(SampleService::class.java, coreModule.classLoader)
-            val serviceLoader = ServiceLoader.load(SampleService::class.java, coreModule.classLoaderPrivate)
-            serviceLoader.iterator().forEach { t: SampleService -> print(t.value) }
+//            val serviceLoader = ServiceLoader.load("org.apache.geode.service.SampleService", coreModule.classLoaderPrivate)
+//            serviceLoader.iterator().forEach { t: SampleService -> print(t.value) }
         }
     }
 }
