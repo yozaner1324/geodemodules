@@ -14,7 +14,8 @@
 		<module>sub-module1</module>
 		<module>sub-module2</module>
 		<module>modulesApp</module>
-	</modules>
+        <module>sub-module3</module>
+    </modules>
 
 	<properties>
 	</properties>
@@ -31,50 +32,23 @@
 <!--					<release>1.8</release>-->
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>de.smartics.maven.plugin</groupId>
-				<artifactId>smartics-jboss-modules-maven-plugin</artifactId>
-				<version>2.1.5</version>
-				<executions>
-					<execution>
-						<id>create-modules-archive</id>
-						<goals>
-							<goal>create-modules-archive</goal>
-						</goals>
-						<phase>package</phase>
-					</execution>
-				</executions>
-			</plugin>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<packageName>org.apache.geode</packageName>
-						</manifest>
-						<manifestEntries>
-							<Created-By>Udo Kohlmeyer</Created-By>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-dependency-plugin</artifactId>
-				<version>3.1.1</version>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.2.1</version>
 				<executions>
+					<!-- Run shade goal on package phase -->
 					<execution>
-						<id>copy-dependencies</id>
 						<phase>package</phase>
 						<goals>
-							<goal>copy-dependencies</goal>
+							<goal>shade</goal>
 						</goals>
 					</execution>
 				</executions>
 			</plugin>
+
+
 		</plugins>
 	</build>
 
