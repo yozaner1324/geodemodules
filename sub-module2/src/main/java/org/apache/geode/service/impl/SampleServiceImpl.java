@@ -7,6 +7,6 @@ import org.apache.geode.service.SampleService;
 public class SampleServiceImpl implements SampleService {
 
 	public String getValue() {
-		return StringUtils.chomp("42");
+		return StringUtils.prependIfMissing("sub2","42");
 	}
 }

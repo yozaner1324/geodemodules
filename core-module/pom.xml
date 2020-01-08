@@ -16,26 +16,4 @@
 
 	<artifactId>core-module</artifactId>
 
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>3.2.0</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<addClasspath>true</addClasspath>
-							<packageName>org.apache.geode</packageName>
-						</manifest>
-						<manifestEntries>
-							<Created-By>Udo Kohlmeyer</Created-By>
-							<Dependencies></Dependencies>
-						</manifestEntries>
-					</archive>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
-
 </project>
