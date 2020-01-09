@@ -22,7 +22,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
             modulesList.forEach { moduleName -> moduleMap[moduleName] = loadModule(moduleName) }
         }
         moduleMap.values.forEach { module ->
-            println("Module name: ${module.name}")
             ServiceLoader.load(clazz, module.classLoader)
                     .forEach {
                         it.init(this)

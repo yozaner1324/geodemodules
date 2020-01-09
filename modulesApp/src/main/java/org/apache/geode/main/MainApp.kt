@@ -15,7 +15,7 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
     }
 
     companion object {
-        val CORE_MODULE_PATH = "/Users/ukohlmeyer/projects/geodemodules/core-module/target/core-module-1.0-SNAPSHOT.jar"
+//        val CORE_MODULE_PATH = "/Users/ukohlmeyer/projects/geodemodules/core-module/target/core-module-1.0-SNAPSHOT.jar"
         val SUB_MODULE_1_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module1/target/submodule-1-1.0-SNAPSHOT.jar"
         val SUB_MODULE_2_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module2/target/sub-module2-1.0-SNAPSHOT.jar"
         val SUB_MODULE_3_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module3/target/sub-module3-1.0-SNAPSHOT.jar"
@@ -25,15 +25,15 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
         fun main(args: Array<String>) {
             val mainApp = MainApp()
 
-            mainApp.registerModuleFromJar(CORE_MODULE_PATH, "coreModule")
-            mainApp.registerModuleFromJar(SUB_MODULE_1_PATH, "submodule1", "coreModule")
-            mainApp.registerModuleFromJar(SUB_MODULE_2_PATH, "submodule2", "coreModule")
-            mainApp.registerModuleFromJar(SUB_MODULE_3_PATH, "submodule3", "coreModule")
-            mainApp.registerModuleFromJar(SUB_MODULE_4_PATH, "submodule4", "coreModule")
+//            mainApp.registerModuleFromJar(CORE_MODULE_PATH, "coreModule")
+            mainApp.registerModuleFromJar(SUB_MODULE_1_PATH, "submodule1")
+            mainApp.registerModuleFromJar(SUB_MODULE_2_PATH, "submodule2")
+            mainApp.registerModuleFromJar(SUB_MODULE_3_PATH, "submodule3")
+            mainApp.registerModuleFromJar(SUB_MODULE_4_PATH, "submodule4")
             mainApp.registerModuleFromJar(SUB_MODULE_5_PATH, "submodule5", "submodule4")
 
 
-            val coreModule = mainApp.loadModule("coreModule")
+//            val coreModule = mainApp.loadModule("coreModule")
             val subModule1 = mainApp.loadModule("submodule1")
             val subModule2 = mainApp.loadModule("submodule2")
             val subModule3 = mainApp.loadModule("submodule3")
