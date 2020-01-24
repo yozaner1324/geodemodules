@@ -1,4 +1,4 @@
-package org.apache.geode.service.impl;
+package org.apache.geode.service.mod2.impl;
 
 import org.apache.commons.lang3.StringUtils;
 

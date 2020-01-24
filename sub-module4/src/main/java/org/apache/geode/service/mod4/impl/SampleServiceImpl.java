@@ -1,21 +1,20 @@
-package org.apache.geode.service.impl;
+package org.apache.geode.service.mod4.impl;
 
-import org.apache.geode.module.service.ModuleService;
+import java.util.ServiceLoader;
+
 import org.apache.geode.service.SampleService;
 import org.apache.geode.subService.SampleSubService;
 
 public class SampleServiceImpl implements SampleService {
-  private ModuleService moduleService;
 
   @Override
   public void init(Object... initObjects) {
-    moduleService = (ModuleService) initObjects[0];
   }
 
   @Override
   public String getValue() {
     try {
-      for (SampleService sampleService : moduleService.loadService(SampleSubService.class)) {
+      for (SampleService sampleService : ServiceLoader.load(SampleSubService.class)) {
         SampleSubService sampleSubService = (SampleSubService) sampleService;
         return sampleSubService.getSubServiceValue();
       }

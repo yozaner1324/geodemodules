@@ -1,4 +1,4 @@
-package org.apache.geode.service.impl;
+package org.apache.geode.service.mod1.impl;
 
 import com.google.common.base.Strings;
 
