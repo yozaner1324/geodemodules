@@ -15,7 +15,7 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
     }
 
     companion object {
-//        val CORE_MODULE_PATH = "/Users/ukohlmeyer/projects/geodemodules/core-module/target/core-module-1.0-SNAPSHOT.jar"
+        //        val CORE_MODULE_PATH = "/Users/ukohlmeyer/projects/geodemodules/core-module/target/core-module-1.0-SNAPSHOT.jar"
         val SUB_MODULE_1_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module1/target/submodule-1-1.0-SNAPSHOT.jar"
         val SUB_MODULE_2_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module2/target/sub-module2-1.0-SNAPSHOT.jar"
         val SUB_MODULE_3_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module3/target/sub-module3-1.0-SNAPSHOT.jar"
@@ -53,6 +53,8 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
         private fun testClassLeakage(module: Module) {
             checkClassAndLogError(module, "org.apache.geode.service.impl.SampleServiceImpl")
             checkClassAndLogError(module, "org.apache.geode.service.SampleService")
+            checkClassAndLogError(module, "org.apache.geode.subService.SampleSubService")
+            checkClassAndLogError(module, "org.apache.geode.subService.impl.SampleSubServiceImpl")
             checkClassAndLogError(module, "org.springframework.util.StringUtils")
             checkClassAndLogError(module, "org.apache.commons.lang3.StringUtils")
             checkClassAndLogError(module, "com.google.common.base.Strings")
