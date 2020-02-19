@@ -43,45 +43,4 @@ public class DemoApplication implements SampleService {
   public void shutDown() {
     applicationContext.close();
   }
-
-  private class DemoSpringApplicationRunnerBuilder extends SpringApplicationBuilder {
-    private final ClassLoader classLoader;
-
-    public DemoSpringApplicationRunnerBuilder(ClassLoader classLoader, Class<?>... sources) {
-      super(sources);
-      this.classLoader = classLoader;
-    }
-
-    @Override
-    protected SpringApplication createSpringApplication(Class<?>... sources) {
-      return new DemoSpringApplication(classLoader, sources);
-    }
-  }
-
-  private class DemoSpringApplication extends SpringApplication {
-    private ClassLoader classLoader;
-
-    public DemoSpringApplication(ClassLoader classLoader, Class<?>... primarySources) {
-      super(primarySources);
-      this.classLoader = classLoader;
-    }
-
-    public DemoSpringApplication(ResourceLoader resourceLoader,
-                                 Class<?>... primarySources) {
-      super(resourceLoader, primarySources);
-    }
-
-    @Override
-    public ClassLoader getClassLoader() {
-      return this.classLoader;
-    }
-
-    @Override
-    protected ConfigurableApplicationContext createApplicationContext() {
-      AbstractApplicationContext applicationContext =
-          (AbstractApplicationContext) super.createApplicationContext();
-      applicationContext.setClassLoader(this.classLoader);
-      return applicationContext;
-    }
-  }
 }
