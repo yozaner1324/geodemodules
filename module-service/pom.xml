@@ -27,7 +27,7 @@
         <dependency>
             <groupId>org.jboss.modules</groupId>
             <artifactId>jboss-modules</artifactId>
-            <version>1.9.2.Final</version>
+            <version>1.10.0.Final-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

@@ -6,6 +6,8 @@ import org.jboss.modules.Module
 interface ModuleService {
     fun loadClass(className: String): Class<*>?
     fun loadService(clazz: Class<out SampleService>): List<SampleService>
+    fun unloadServices()
     fun registerModuleFromJar(moduleName: String, jarPath: String, vararg dependentComponents: String)
     fun loadModule(moduleName: String): Module
+    fun unloadModule(moduleName: String)
 }
