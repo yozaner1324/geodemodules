@@ -11,15 +11,9 @@
 
     <modules>
         <module>core-module</module>
-        <module>sub-module1</module>
-        <module>sub-module2</module>
         <module>modulesApp</module>
-        <module>sub-module3</module>
-        <module>sub-module4</module>
-        <module>sub-module5</module>
         <module>module-service</module>
         <module>spring-submodule</module>
-        <module>spring-submodule2</module>
     </modules>
 
     <properties>
