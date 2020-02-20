@@ -19,11 +19,12 @@
         <module>sub-module5</module>
         <module>module-service</module>
         <module>spring-submodule</module>
+        <module>spring-submodule2</module>
     </modules>
 
     <properties>
-        <maven.compiler.target>1.9</maven.compiler.target>
-        <maven.compiler.source>1.9</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+        <maven.compiler.source>11</maven.compiler.source>
     </properties>
 
     <build>
@@ -33,8 +34,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <source>1.9</source>
-                    <target>1.9</target>
+                    <source>11</source>
+                    <target>11</target>
                     <!--					<release>1.8</release>-->
                 </configuration>
             </plugin>

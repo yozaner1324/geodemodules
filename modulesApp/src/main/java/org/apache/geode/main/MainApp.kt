@@ -22,6 +22,8 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
         val SUB_MODULE_4_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module4/target/sub-module4-1.0-SNAPSHOT.jar"
         val SUB_MODULE_5_PATH = "/Users/ukohlmeyer/projects/geodemodules/sub-module5/target/sub-module5-1.0-SNAPSHOT.jar"
         val SPRING_MODULE_PATH = "/Users/ukohlmeyer/projects/geodemodules/spring-submodule/target/spring-submodule-1.0-SNAPSHOT.jar"
+//        val SPRING_MODULE_2_PATH = "/Users/ukohlmeyer/projects/geodemodules/spring-submodule2/target/spring-submodule2-1.0-SNAPSHOT.jar"
+
         @JvmStatic
         fun main(args: Array<String>) {
             val mainApp = MainApp()
@@ -32,6 +34,7 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             mainApp.registerModuleFromJar(SUB_MODULE_4_PATH, "submodule4")
             mainApp.registerModuleFromJar(SUB_MODULE_5_PATH, "submodule5", "submodule4")
             mainApp.registerModuleFromJar(SPRING_MODULE_PATH, "springModule")
+//            mainApp.registerModuleFromJar(SPRING_MODULE_2_PATH, "springModule2")
 
 
             var subModule1 = mainApp.loadModule("submodule1")
@@ -40,16 +43,17 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             var subModule4 = mainApp.loadModule("submodule4")
             var subModule5 = mainApp.loadModule("submodule5")
             var springModule = mainApp.loadModule("springModule")
+//            var springModule2 = mainApp.loadModule("springModule2")
 
-            testClassLeakage(subModule1)
-            testClassLeakage(subModule2)
-            testClassLeakage(subModule3)
-            testClassLeakage(subModule4)
-            testClassLeakage(subModule5)
-            testClassLeakage(springModule)
-
+//            testClassLeakage(subModule1)
+//            testClassLeakage(subModule2)
+//            testClassLeakage(subModule3)
+//            testClassLeakage(subModule4)
+//            testClassLeakage(subModule5)
+//            testClassLeakage(springModule)
+//
             mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
-
+//
             mainApp.unloadServices()
 
             mainApp.unloadModule("submodule1")
@@ -58,11 +62,16 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             mainApp.unloadModule("submodule4")
             mainApp.unloadModule("submodule5")
             mainApp.unloadModule("springModule")
+//            mainApp.unloadModule("springModule2")
 
-            mainApp.loadModule("springModule")
-            mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
-            mainApp.unloadServices()
-            mainApp.unloadModule("springModule")
+//            mainApp.registerModuleFromJar(SPRING_MODULE_2_PATH, "springModule")
+
+//            mainApp.loadModule("springModule")
+//            mainApp.loadModule("springModule2")
+//            mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
+//            mainApp.unloadServices()
+//            mainApp.unloadModule("springModule")
+//            mainApp.unloadModule("springModule2")
         }
 
 
