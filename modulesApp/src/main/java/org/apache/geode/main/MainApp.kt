@@ -38,48 +38,12 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
 
             mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
             mainApp.unloadServices()
-
-            mainApp.unloadModule("submodule1")
-            mainApp.unloadModule("submodule2")
-            mainApp.unloadModule("submodule3")
-            mainApp.unloadModule("submodule4")
-            mainApp.unloadModule("submodule5")
-            mainApp.unloadModule("springModule")
-            mainApp.unloadModule("springModule2")
-
-        }
-
-
-        private fun testClassLeakage(module: Module) {
-            checkClassAndLogError(module, "org.apache.geode.service.impl.SampleServiceImpl")
-            checkClassAndLogError(module, "org.apache.geode.service.SampleService")
-            checkClassAndLogError(module, "org.apache.geode.subService.SampleSubService")
-            checkClassAndLogError(module, "org.apache.geode.subService.impl.SampleSubServiceImpl")
-            checkClassAndLogError(module, "org.springframework.util.StringUtils")
-            checkClassAndLogError(module, "org.apache.commons.lang3.StringUtils")
-            checkClassAndLogError(module, "com.google.common.base.Strings")
-            println("<< ------------------------ >>")
-        }
-
-        private fun checkClassAndLogError(module: Module, classString: String) {
-            try {
-                module.classLoader.loadClass(classString)
-            } catch (e: Exception) {
-                println("${module.name} cannot find $classString")
-            }
         }
     }
 
     private fun unloadServices() {
         moduleService.unloadServices()
     }
-
-    private fun unloadModule(moduleName: String) {
-        moduleService.unloadModule(moduleName)
-    }
-
-    private fun loadModule(moduleName: String): Module = moduleService.loadModule(moduleName)
-
 
     private fun registerModuleFromJar(modulePath: String, name: String, vararg dependentModules: String) {
         moduleService.registerModuleFromJar(modulePath, name, *dependentModules)
