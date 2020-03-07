@@ -58,3 +58,8 @@ hs_err_pid*
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 
+module-service/dependency-reduced-pom.xml
+modulesApp/dependency-reduced-pom.xml
+sub-module1/dependency-reduced-pom.xml
+sub-module2/dependency-reduced-pom.xml
+sub-module3/dependency-reduced-pom.xml
