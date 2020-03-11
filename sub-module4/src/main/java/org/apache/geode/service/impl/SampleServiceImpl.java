@@ -17,7 +17,7 @@ public class SampleServiceImpl implements SampleService {
     try {
       for (SampleService sampleService : moduleService.loadService(SampleSubService.class)) {
         SampleSubService sampleSubService = (SampleSubService) sampleService;
-        return sampleSubService.getSubServiceValue();
+        return sampleSubService.getSubServiceValue() + new Blooper().getValue() + new Misc().getValue() + new Random().getValue();
       }
     } catch (Exception e) {
     }
