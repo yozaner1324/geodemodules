@@ -75,3 +75,4 @@ modulesApp/dependency-reduced-pom.xml
 sub-module1/dependency-reduced-pom.xml
 sub-module2/dependency-reduced-pom.xml
 sub-module3/dependency-reduced-pom.xml
+/moduleDeps.txt

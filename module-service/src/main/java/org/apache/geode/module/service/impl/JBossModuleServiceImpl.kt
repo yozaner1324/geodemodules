@@ -64,8 +64,8 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         builder.addDependency(DependencySpec
                 .createSystemDependencySpec(PathUtils.getPathSet(null)))
 
-        var jarFile = JarFile(MavenArtifactUtil.resolveArtifact(coordinates, "jar"))
-        builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createJarResourceLoader(moduleName, jarFile)))
+        val jarFile = JarFile(MavenArtifactUtil.resolveArtifact(coordinates, "jar"))
+        builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createJarResourceLoader(jarFile)))
         val moduleSpec = builder.create()
         moduleLoader.addModuleSpec(moduleSpec)
 
@@ -74,9 +74,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
 
     override fun loadModule(moduleName: String): Module = moduleLoader.loadModule(moduleName)
 
-    private fun loadImplementationFromServiceLoader(module: Module) {
-
-    }
 }
 
 class TestModuleLoader(moduleFinder: Array<ModuleFinder> = ModuleLoader.NO_FINDERS) : DelegatingModuleLoader(Module.getSystemModuleLoader(), moduleFinder) {
