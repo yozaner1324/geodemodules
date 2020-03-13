@@ -1,4 +1,16 @@
+gradle
+gradlew
+gradlew.bat
+gradle.settings
 .idea
+.gradle
+build
+/build/
+build/*
+*/build/
+.gradletasknamecache
+!gradle-wrapper.jar
+gradle-app.setting
 **/target
 ### Example user template template
 ### Example user template

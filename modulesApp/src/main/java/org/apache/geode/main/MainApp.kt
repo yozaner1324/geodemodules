@@ -5,6 +5,7 @@ import org.apache.geode.module.service.impl.JBossModuleServiceImpl
 import org.apache.geode.service.SampleService
 import org.jboss.modules.Module
 import org.jboss.modules.maven.ArtifactCoordinates
+import java.lang.reflect.Method
 
 class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl()) {
     private fun loadImplementationFromServiceLoader(clazz: Class<SampleService>) {
@@ -33,7 +34,6 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             mainApp.registerModuleFromJar(ArtifactCoordinates("org.apache.geode", "sub-module4", "1.0-SNAPSHOT"), "combined", "submodule1", "submodule2", "submodule3")
             mainApp.registerModuleFromJar(ArtifactCoordinates("org.apache.geode", "sub-module5", "1.0-SNAPSHOT"), "submodule5", "combined")
 
-
             val subModule1 = mainApp.loadModule("submodule1")
             val subModule2 = mainApp.loadModule("submodule2")
             val subModule3 = mainApp.loadModule("submodule3")
@@ -50,6 +50,11 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
 
             mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
 
+            try {
+                val o: Any = mainApp.loadClass("org.apache.geode.subService.impl.DomainObject")!!.newInstance()
+                val method: Method = o.javaClass.getMethod("getValue")
+                println(method.invoke(o))
+            } catch (e: java.lang.Exception) { }
         }
 
         private fun testClassLeakage(module: Module) {
@@ -74,6 +79,7 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
 
     private fun loadModule(moduleName: String): Module = moduleService.loadModule(moduleName)
 
+    private fun loadClass(className: String): Class<*>? = moduleService.loadClass(className)
 
     private fun registerModuleFromJar(coordinates: ArtifactCoordinates, name: String, vararg dependentModules: String) {
         moduleService.registerModuleFromJar(coordinates, name, *dependentModules)

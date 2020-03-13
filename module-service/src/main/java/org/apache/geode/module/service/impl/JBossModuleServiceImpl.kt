@@ -6,8 +6,6 @@ import org.jboss.modules.*
 import org.jboss.modules.filter.PathFilters
 import org.jboss.modules.maven.ArtifactCoordinates
 import org.jboss.modules.maven.MavenArtifactUtil
-import org.jboss.modules.maven.MavenResolver
-import java.io.File
 import java.util.*
 import java.util.jar.JarFile
 
@@ -16,7 +14,16 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
     private val modulesList: MutableList<String> = mutableListOf();
 
     override fun loadClass(className: String): Class<*> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var clazz: Class<*>
+        for (module in moduleMap.values) {
+            try {
+                clazz = module.classLoader.loadClass(className)
+                println(module.name)
+                return clazz
+            } catch (e: Exception) {
+            }
+        }
+        throw Exception("No class named $className found")
     }
 
     override fun loadService(clazz: Class<out SampleService>): List<SampleService> {
