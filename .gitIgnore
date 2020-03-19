@@ -76,3 +76,11 @@ sub-module1/dependency-reduced-pom.xml
 sub-module2/dependency-reduced-pom.xml
 sub-module3/dependency-reduced-pom.xml
 /moduleDeps.txt
+core-module-info.txt
+module-service-info.txt
+modulesApp-info.txt
+sub-module1-info.txt
+sub-module2-info.txt
+sub-module3-info.txt
+sub-module4-info.txt
+sub-module5-info.txt
