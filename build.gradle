@@ -9,12 +9,13 @@ plugins {
     id 'java-gradle-plugin'
 }
 
+apply plugin: ModuleDependenciesPlugin
+
 allprojects {
     group = 'org.apache.geode'
     version = '1.0-SNAPSHOT'
 
     apply plugin: 'idea'
-    apply plugin: ModuleDependenciesPlugin
 
     repositories {
         mavenLocal()

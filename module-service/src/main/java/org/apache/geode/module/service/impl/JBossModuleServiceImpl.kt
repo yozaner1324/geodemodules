@@ -6,6 +6,8 @@ import org.jboss.modules.*
 import org.jboss.modules.filter.PathFilters
 import org.jboss.modules.maven.ArtifactCoordinates
 import org.jboss.modules.maven.MavenArtifactUtil
+import java.io.File
+import java.nio.file.Paths
 import java.util.*
 import java.util.jar.JarFile
 
@@ -18,7 +20,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         for (module in moduleMap.values) {
             try {
                 clazz = module.classLoader.loadClass(className)
-                println(module.name)
                 return clazz
             } catch (e: Exception) {
             }
@@ -42,6 +43,9 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
     }
 
     override fun registerModuleFromJar(coordinates: ArtifactCoordinates, moduleName: String, vararg dependentComponents: String) {
+
+        if(modulesList.contains(moduleName)) return
+
         val builder: ModuleSpec.Builder = ModuleSpec.build(moduleName)
 
         // Add the module's own content
@@ -69,7 +73,80 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         val moduleSpec = builder.create()
         moduleLoader.addModuleSpec(moduleSpec)
 
-        modulesList.add(moduleName);
+        modulesList.add(moduleName)
+    }
+
+    override fun registerModuleFromPath(path: String, moduleName: String, vararg dependentComponents: String) {
+
+        if(modulesList.contains(moduleName)) return
+
+        val builder: ModuleSpec.Builder = ModuleSpec.build(moduleName)
+
+// Add the module's own content
+        builder.addDependency(LocalDependencySpecBuilder()
+                .setExportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
+                .setImportServices(true)
+                .setExport(true)
+                .build())
+
+        dependentComponents.forEach {
+            builder.addDependency(
+                    ModuleDependencySpecBuilder()
+                            .setName(it)
+                            .build())
+        }
+
+        builder.addDependency(DependencySpec
+                .createSystemDependencySpec(PathUtils.getPathSet(null)))
+
+        builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get(path))))
+        val moduleSpec = builder.create()
+        moduleLoader.addModuleSpec(moduleSpec)
+
+        modulesList.add(moduleName)
+    }
+
+    override fun registerModuleFromName(moduleName: String) {
+        if(modulesList.contains(moduleName)) return
+
+        val builder: ModuleSpec.Builder = ModuleSpec.build(moduleName)
+
+        // Add the module's own content
+        builder.addDependency(LocalDependencySpecBuilder()
+                .setExportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
+                .setImportServices(true)
+                .setExport(true)
+                .build())
+
+        builder.addDependency(DependencySpec.createSystemDependencySpec(PathUtils.getPathSet(null)))
+
+        val file = File("$moduleName-info.txt")
+        file.readLines().forEach { line ->
+            val fields = line.split("\t")
+            if(fields[0] == "root") {
+                builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get(fields[1]))))
+            } else if(fields[0] == "project") {
+                builder.addDependency(ModuleDependencySpecBuilder().setName(createModuleIfNotExists(fields[1])).build())
+            } else if(fields[0] == "artifact") {
+                val name = fields[1] + fields[2] + fields[3]
+                if(!modulesList.contains(name)) {
+                    registerModuleFromJar(ArtifactCoordinates(fields[1], fields[2], fields[3]), name)
+                }
+                builder.addDependency(ModuleDependencySpecBuilder().setName(name).build())
+            }
+        }
+
+        val moduleSpec = builder.create()
+        moduleLoader.addModuleSpec(moduleSpec)
+
+        modulesList.add(moduleName)
+    }
+
+    private fun createModuleIfNotExists(name: String): String {
+        if(!modulesList.contains(name)) {
+            registerModuleFromName(name)
+        }
+        return name
     }
 
     override fun loadModule(moduleName: String): Module = moduleLoader.loadModule(moduleName)
