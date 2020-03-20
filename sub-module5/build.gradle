@@ -3,6 +3,6 @@
  */
 
 dependencies {
-    providedCompile project(':sub-module4')
-    providedCompile project(':core-module')
+    api project(':sub-module4')
+    api project(':core-module')
 }

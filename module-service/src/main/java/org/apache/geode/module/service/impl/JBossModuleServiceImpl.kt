@@ -33,7 +33,7 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
             modulesList.forEach { moduleName -> moduleMap[moduleName] = loadModule(moduleName) }
         }
         moduleMap.values.forEach { module ->
-            ServiceLoader.load(clazz, module.classLoader)
+                ServiceLoader.load(clazz, module.classLoader)
                     .forEach {
                         it.init(this)
                         returnList.add(it)
@@ -51,7 +51,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         // Add the module's own content
         builder.addDependency(LocalDependencySpecBuilder()
                 .setExportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
-//                .setImportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
                 .setImportServices(true)
                 .setExport(true)
                 .build())
@@ -59,8 +58,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         dependentComponents.forEach {
             builder.addDependency(
                     ModuleDependencySpecBuilder()
-//                            .setImportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
-//                            .setImportServices(true)
                             .setName(it)
                             .build())
         }
@@ -106,7 +103,7 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         modulesList.add(moduleName)
     }
 
-    override fun registerModuleFromName(moduleName: String) {
+    override fun registerModuleForName(moduleName: String) {
         if(modulesList.contains(moduleName)) return
 
         val builder: ModuleSpec.Builder = ModuleSpec.build(moduleName)
@@ -120,11 +117,12 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
 
         builder.addDependency(DependencySpec.createSystemDependencySpec(PathUtils.getPathSet(null)))
 
-        val file = File("$moduleName-info.txt")
+        val file = File("$moduleName/$moduleName-info.txt")
         file.readLines().forEach { line ->
             val fields = line.split("\t")
             if(fields[0] == "root") {
-                builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get(fields[1]))))
+                builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get(fields[1] +"/classes/java/main"))))
+                builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get(fields[1] +"/resources/main"))))
             } else if(fields[0] == "project") {
                 builder.addDependency(ModuleDependencySpecBuilder().setName(createModuleIfNotExists(fields[1])).build())
             } else if(fields[0] == "artifact") {
@@ -144,7 +142,7 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
 
     private fun createModuleIfNotExists(name: String): String {
         if(!modulesList.contains(name)) {
-            registerModuleFromName(name)
+            registerModuleForName(name)
         }
         return name
     }

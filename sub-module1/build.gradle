@@ -4,5 +4,5 @@
 
 dependencies {
     implementation 'com.google.guava:guava:28.1-jre'
-    providedCompile project(':core-module')
+    api project(':core-module')
 }

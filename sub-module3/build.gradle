@@ -4,5 +4,5 @@
 
 dependencies {
     implementation 'org.springframework:spring-core:5.2.2.RELEASE'
-    providedCompile project(':core-module')
+    api project(':core-module')
 }

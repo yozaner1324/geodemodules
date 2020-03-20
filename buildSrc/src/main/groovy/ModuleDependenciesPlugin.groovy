@@ -10,7 +10,7 @@ class ModuleDependenciesPlugin implements Plugin<Project> {
         String path = null
         project.subprojects.forEach({sub ->
             if(dependency == sub.name) {
-                path = sub.buildDir.path + "/classes/java/main"
+                path = sub.buildDir.path
             }
         })
         return path
@@ -22,7 +22,7 @@ class ModuleDependenciesPlugin implements Plugin<Project> {
 
                 project.subprojects.forEach({ sub ->
 
-                    File file = new File(sub.name + "-info.txt")
+                    File file = new File(sub.name + "/" + sub.name + "-info.txt")
                     file.write("root\t" + pathForName(project, sub.name))
 
                     sub.configurations.default.resolvedConfiguration.firstLevelModuleDependencies.forEach({ dep ->
@@ -37,13 +37,6 @@ class ModuleDependenciesPlugin implements Plugin<Project> {
                     })
                 })
             }
-
-//            // TODO: Get actual information and replace with a better schema probably
-//            file << "org.apache.geode\t" << "sub-module1\t" << "1.0-SNAPSHOT\t" << "submodule1" << "\n"
-//            file << "org.apache.geode\t" << "sub-module2\t" << "1.0-SNAPSHOT\t" << "submodule2" << "\n"
-//            file << "org.apache.geode\t" << "sub-module3\t" << "1.0-SNAPSHOT\t" << "submodule3" << "\n"
-//            file << "org.apache.geode\t" << "sub-module4\t" << "1.0-SNAPSHOT\t" << "combined\t" << "submodule1\t" << "submodule2\t" << "submodule3" << "\n"
-//            file << "org.apache.geode\t" << "sub-module5\t" << "1.0-SNAPSHOT\t" << "submodule5\t" << "combined" << "\n"
         }
     }
 }

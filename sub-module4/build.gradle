@@ -3,9 +3,8 @@
  */
 
 dependencies {
-    //providedCompile project(':core-module')
-    providedCompile project(':module-service')
-    providedCompile project(':sub-module3')
-    providedCompile project(':sub-module2')
-    providedCompile project(':sub-module1')
+    api project(':module-service')
+    api project(':sub-module3')
+    api project(':sub-module2')
+    api project(':sub-module1')
 }

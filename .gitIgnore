@@ -4,6 +4,10 @@ gradlew.bat
 gradle.settings
 .idea
 .gradle
+target
+/target/
+target/*
+*/target/
 build
 /build/
 build/*
@@ -84,3 +88,4 @@ sub-module2-info.txt
 sub-module3-info.txt
 sub-module4-info.txt
 sub-module5-info.txt
+*/target/*

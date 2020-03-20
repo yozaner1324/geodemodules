@@ -10,5 +10,5 @@ interface ModuleService {
     fun registerModuleFromJar(coordinates: ArtifactCoordinates, moduleName: String, vararg dependentComponents: String)
     fun registerModuleFromPath(path: String, moduleName: String, vararg dependentComponents: String)
     fun loadModule(moduleName: String): Module
-    fun registerModuleFromName(name: String)
+    fun registerModuleForName(name: String)
 }
