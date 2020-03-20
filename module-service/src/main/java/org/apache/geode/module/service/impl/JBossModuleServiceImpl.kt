@@ -40,7 +40,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         // Add the module's own content
         builder.addDependency(LocalDependencySpecBuilder()
                 .setExportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
-//                .setImportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
                 .setImportServices(true)
                 .setExport(true)
                 .build())
@@ -48,8 +47,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         dependentComponents.forEach {
             builder.addDependency(
                     ModuleDependencySpecBuilder()
-//                            .setImportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
-//                            .setImportServices(true)
                             .setName(it)
                             .build())
         }
@@ -67,9 +64,6 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
 
     override fun loadModule(moduleName: String): Module = moduleLoader.loadModule(moduleName)
 
-    private fun loadImplementationFromServiceLoader(module: Module) {
-
-    }
 }
 
 class TestModuleLoader(moduleFinder: Array<ModuleFinder> = ModuleLoader.NO_FINDERS) : DelegatingModuleLoader(Module.getSystemModuleLoader(), moduleFinder) {
