@@ -11,4 +11,5 @@ interface ModuleService {
     fun registerModuleFromPath(path: String, moduleName: String, vararg dependentComponents: String)
     fun loadModule(moduleName: String): Module
     fun registerModuleForName(name: String)
+    fun registerUberModule(name: String, vararg modules: String)
 }

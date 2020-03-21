@@ -29,18 +29,21 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             mainApp.registerModuleForName("sub-module3")
             mainApp.registerModuleForName("sub-module4")
             mainApp.registerModuleForName("sub-module5")
+            mainApp.registerUberModule("uber-module", "sub-module1", "sub-module2", "sub-module3", "sub-module4", "sub-module5")
 
             val subModule1 = mainApp.loadModule("sub-module1")
             val subModule2 = mainApp.loadModule("sub-module2")
             val subModule3 = mainApp.loadModule("sub-module3")
             val subModule4 = mainApp.loadModule("sub-module4")
             val subModule5 = mainApp.loadModule("sub-module5")
+            val uberModule = mainApp.loadModule("uber-module")
 
             testClassLeakage(subModule1)
             testClassLeakage(subModule2)
             testClassLeakage(subModule3)
             testClassLeakage(subModule4)
             testClassLeakage(subModule5)
+            testClassLeakage(uberModule)
 
             mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
 
@@ -81,5 +84,9 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
 
     private fun registerModuleForName(name: String) {
         moduleService.registerModuleForName(name)
+    }
+
+    private fun registerUberModule(name: String, vararg modules: String) {
+        moduleService.registerUberModule(name, *modules)
     }
 }

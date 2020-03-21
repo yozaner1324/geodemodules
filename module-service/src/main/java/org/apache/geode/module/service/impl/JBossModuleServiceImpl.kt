@@ -140,6 +140,31 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         modulesList.add(moduleName)
     }
 
+    override fun registerUberModule(name: String, vararg modules: String) {
+        val builder: ModuleSpec.Builder = ModuleSpec.build(name)
+
+        // Add the module's own content
+        builder.addDependency(LocalDependencySpecBuilder()
+                .setExportFilter(PathFilters.isOrIsChildOf("org/apache/geode"))
+                .setImportServices(true)
+                .setExport(true)
+                .build())
+
+        builder.addDependency(DependencySpec.createSystemDependencySpec(PathUtils.getPathSet(null)))
+
+        modules.forEach { module ->
+            builder.addDependency(ModuleDependencySpecBuilder().setName(module).build())
+
+            // TODO: Find better way to include resources
+            builder.addResourceRoot(ResourceLoaderSpec.createResourceLoaderSpec(ResourceLoaders.createPathResourceLoader(Paths.get("/Users/patrickjohnson/Documents/GitHub/geodemodules/sub-module1/build/resources/main"))))
+        }
+
+        val moduleSpec = builder.create()
+        moduleLoader.addModuleSpec(moduleSpec)
+
+        modulesList.add(name)
+    }
+
     private fun createModuleIfNotExists(name: String): String {
         if(!modulesList.contains(name)) {
             registerModuleForName(name)
