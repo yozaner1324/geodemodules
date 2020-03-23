@@ -13,7 +13,11 @@ import java.util.jar.JarFile
 
 class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestModuleLoader()) : ModuleService {
     private val moduleMap: MutableMap<String, Module> = mutableMapOf()
-    private val modulesList: MutableList<String> = mutableListOf();
+    private val modulesList: MutableList<String> = mutableListOf()
+
+    override fun getAvailableModules(): List<String> {
+        return File("modules.txt").readLines()
+    }
 
     override fun loadClass(className: String): Class<*> {
         var clazz: Class<*>

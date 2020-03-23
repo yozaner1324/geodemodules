@@ -24,11 +24,20 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
         fun main(args: Array<String>) {
             val mainApp = MainApp()
 
-            mainApp.registerModuleForName("sub-module1")
-            mainApp.registerModuleForName("sub-module2")
-            mainApp.registerModuleForName("sub-module3")
-            mainApp.registerModuleForName("sub-module4")
-            mainApp.registerModuleForName("sub-module5")
+            println("*****Available Modules*****")
+            mainApp.getAvailableModules().forEach {
+                println(it)
+                if(it.startsWith("sub")) {
+                    mainApp.registerModuleIfAvailable(it)
+                }
+            }
+            println("***************************")
+
+//            mainApp.registerModuleForName("sub-module1")
+//            mainApp.registerModuleForName("sub-module2")
+//            mainApp.registerModuleForName("sub-module3")
+//            mainApp.registerModuleForName("sub-module4")
+//            mainApp.registerModuleForName("sub-module5")
 
             val subModule1 = mainApp.loadModule("sub-module1")
             val subModule2 = mainApp.loadModule("sub-module2")
@@ -71,15 +80,21 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
         }
     }
 
+    private fun registerModuleIfAvailable(name: String) {
+        if(moduleService.getAvailableModules().contains(name)) {
+            moduleService.registerModuleForName(name)
+        }
+    }
+
     private fun loadModule(moduleName: String): Module = moduleService.loadModule(moduleName)
 
     private fun loadClass(className: String): Class<*>? = moduleService.loadClass(className)
+
+    private fun getAvailableModules(): List<String> = moduleService.getAvailableModules()
 
     private fun registerModuleFromJar(coordinates: ArtifactCoordinates, name: String, vararg dependentModules: String) {
         moduleService.registerModuleFromJar(coordinates, name, *dependentModules)
     }
 
-    private fun registerModuleForName(name: String) {
-        moduleService.registerModuleForName(name)
-    }
+    private fun registerModuleForName(name: String) = moduleService.registerModuleForName(name)
 }

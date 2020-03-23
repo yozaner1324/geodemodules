@@ -19,20 +19,20 @@ class ModuleDependenciesPlugin implements Plugin<Project> {
         project.task('recordDeps') {
 
             doLast {
-
+                File modulesFile = new File("modules.txt")
                 project.subprojects.forEach({ sub ->
-
-                    File file = new File(sub.name + "/" + sub.name + "-info.txt")
-                    file.write("root\t" + pathForName(project, sub.name))
+                    modulesFile << sub.name << "\n"
+                    File infoFile = new File(sub.name + "/" + sub.name + "-info.txt")
+                    infoFile.write("root\t" + pathForName(project, sub.name))
 
                     sub.configurations.default.resolvedConfiguration.firstLevelModuleDependencies.forEach({ dep ->
 
                         ComponentIdentifier artifactId = (dep.moduleArtifacts[0] as DefaultResolvedArtifact).id.componentIdentifier
 
                         if(artifactId instanceof DefaultProjectComponentIdentifier) {
-                           file << "\nproject\t" << dep.moduleName << "\t" << pathForName(project, dep.moduleName)
+                           infoFile << "\nproject\t" << dep.moduleName << "\t" << pathForName(project, dep.moduleName)
                         } else {
-                            file << "\nartifact\t" << dep.moduleGroup << "\t" << dep.moduleName << "\t" << dep.moduleVersion
+                            infoFile << "\nartifact\t" << dep.moduleGroup << "\t" << dep.moduleName << "\t" << dep.moduleVersion
                         }
                     })
                 })
