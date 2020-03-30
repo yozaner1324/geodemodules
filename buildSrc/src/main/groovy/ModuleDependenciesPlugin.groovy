@@ -20,6 +20,7 @@ class ModuleDependenciesPlugin implements Plugin<Project> {
 
             doLast {
                 File modulesFile = new File("modules.txt")
+                modulesFile.write("")
                 project.subprojects.forEach({ sub ->
                     modulesFile << sub.name << "\n"
                     File infoFile = new File(sub.name + "/" + sub.name + "-info.txt")
