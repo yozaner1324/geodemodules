@@ -3,6 +3,19 @@
  */
 
 dependencies {
+    // should pick up
     implementation 'com.google.guava:guava:28.1-jre'
     api project(':core-module')
+    providedCompile group: 'org.thymeleaf', name: 'thymeleaf', version: '3.0.11.RELEASE'
+    providedRuntime group: 'io.swagger.core.v3', name: 'swagger-annotations', version: '2.1.1'
+    compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+    compileOnly group: 'javax.xml.bind', name: 'jaxb-api', version: '2.3.1'
+    runtime group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
+    runtimeOnly group: 'io.github.classgraph', name: 'classgraph', version: '4.8.66'
+
+    // should not pick up
+    testCompileOnly group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.6.1'
+    testRuntime group: 'com.google.code.gson', name: 'gson', version: '2.8.6'
+    testImplementation group: 'org.springframework.data', name: 'spring-data-redis', version: '2.1.3.RELEASE'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '3.3.3'
 }

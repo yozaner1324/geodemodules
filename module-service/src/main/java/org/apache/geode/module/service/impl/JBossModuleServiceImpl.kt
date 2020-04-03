@@ -117,7 +117,7 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
 
         builder.addDependency(DependencySpec.createSystemDependencySpec(PathUtils.getPathSet(null)))
 
-        val file = File("$moduleName/$moduleName-info.txt")
+        val file = File("build/modules-info/$moduleName-info.txt")
         file.readLines().forEach { line ->
             val fields = line.split("\t")
             if(fields[0] == "root") {

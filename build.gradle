@@ -9,7 +9,7 @@ plugins {
     id 'java-gradle-plugin'
 }
 
-apply plugin: ModuleDependenciesPlugin
+apply plugin: ModuleInfoPlugin
 
 allprojects {
     group = 'org.apache.geode'
