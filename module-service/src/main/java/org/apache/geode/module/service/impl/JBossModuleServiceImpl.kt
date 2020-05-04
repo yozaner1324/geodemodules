@@ -147,7 +147,11 @@ class JBossModuleServiceImpl(private val moduleLoader: TestModuleLoader = TestMo
         return name
     }
 
-    override fun loadModule(moduleName: String): Module = moduleLoader.loadModule(moduleName)
+    override fun loadModule(moduleName: String): Module {
+        val module = moduleLoader.loadModule(moduleName)
+        moduleMap[moduleName] = module
+        return module
+    }
 
 }
 

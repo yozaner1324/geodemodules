@@ -3,7 +3,7 @@
  */
 
 dependencies {
-    implementation 'org.jboss.modules:jboss-modules:1.10.0.Final'
+    compile 'org.jboss.modules:jboss-modules:1.10.0.Final'
     implementation project(':core-module')
 }
 repositories {
