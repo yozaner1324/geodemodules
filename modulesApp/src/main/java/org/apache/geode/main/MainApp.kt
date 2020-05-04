@@ -48,7 +48,7 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
 //            val o: Any = mainApp.loadClass("org.apache.geode.subService.impl.DomainObject")!!.newInstance()
 //            val method: Method = o.javaClass.getMethod("getValue")
 //            println(method.invoke(o))
-            val managementService: ManagementService = JBossManagementService()
+            val managementService: ManagementService = JBossManagementService(mainApp.moduleService)
             println(managementService.createCache().sayHello())
         }
 

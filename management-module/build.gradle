@@ -11,6 +11,7 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    compile(project(':module-service'))
 
     compile(project(':sub-module1'))
 }
