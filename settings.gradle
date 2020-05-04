@@ -11,3 +11,4 @@ include(':sub-module2')
 include(':sub-module3')
 include(':sub-module4')
 include(':sub-module5')
+include 'management-module'
