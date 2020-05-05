@@ -30,25 +30,25 @@ class MainApp(private val moduleService: ModuleService = JBossModuleServiceImpl(
             mainApp.registerModuleForName("sub-module3")
             mainApp.registerModuleForName("sub-module4")
             mainApp.registerModuleForName("sub-module5")
-            /*
-            val subModule1 = mainApp.loadModule("sub-module1")
-            val subModule2 = mainApp.loadModule("sub-module2")
-            val subModule3 = mainApp.loadModule("sub-module3")
-            val subModule4 = mainApp.loadModule("sub-module4")
-            val subModule5 = mainApp.loadModule("sub-module5")
 
-            testClassLeakage(subModule1)
-            testClassLeakage(subModule2)
-            testClassLeakage(subModule3)
-            testClassLeakage(subModule4)
-            testClassLeakage(subModule5)
+//            val subModule1 = mainApp.loadModule("sub-module1")
+//            val subModule2 = mainApp.loadModule("sub-module2")
+//            val subModule3 = mainApp.loadModule("sub-module3")
+//            val subModule4 = mainApp.loadModule("sub-module4")
+//            val subModule5 = mainApp.loadModule("sub-module5")
+//
+//            testClassLeakage(subModule1)
+//            testClassLeakage(subModule2)
+//            testClassLeakage(subModule3)
+//            testClassLeakage(subModule4)
+//            testClassLeakage(subModule5)
+//
+//            mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
+//
+//            val o: Any = mainApp.loadClass("org.apache.geode.subService.impl.DomainObject")!!.newInstance()
+//            val method: Method = o.javaClass.getMethod("getValue")
+//            println(method.invoke(o))
 
-            mainApp.loadImplementationFromServiceLoader(SampleService::class.java)
-
-            val o: Any = mainApp.loadClass("org.apache.geode.subService.impl.DomainObject")!!.newInstance()
-            val method: Method = o.javaClass.getMethod("getValue")
-            println(method.invoke(o))
-            */
 
             val managementService: ManagementService = JBossManagementService(mainApp.moduleService)
             println(managementService.createCache().sayHello())

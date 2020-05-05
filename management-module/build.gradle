@@ -14,5 +14,9 @@ dependencies {
 
     implementation project(':core-module')
     compile(project(':module-service'))
-    providedCompile(project(':sub-module1'))
+
+//    providedCompile(project(':sub-module1'))
+
+    compileOnly(project(':sub-module1'))
+    providedRuntime(project(':sub-module1'))
 }
